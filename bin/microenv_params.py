@@ -32,8 +32,8 @@ class MicroenvTab(object):
 
         param_name1 = Button(description='diffusion_coefficient', disabled=True, layout=name_button_layout)
 
-        self.oxygen_diffusion_coefficient = FloatText(value=100000.0,
-          step=10000,style=style, layout=widget_layout)
+        self.oxygen_diffusion_coefficient = FloatText(value=0.0,
+          step=0.01,style=style, layout=widget_layout)
 
         param_name2 = Button(description='decay_rate', disabled=True, layout=name_button_layout)
 
@@ -41,31 +41,31 @@ class MicroenvTab(object):
           step=0.01,style=style, layout=widget_layout)
         param_name3 = Button(description='initial_condition', disabled=True, layout=name_button_layout)
 
-        self.oxygen_initial_condition = FloatText(value=38.0,style=style, layout=widget_layout)
+        self.oxygen_initial_condition = FloatText(value=20.0,style=style, layout=widget_layout)
         param_name4 = Button(description='Dirichlet_boundary_condition', disabled=True, layout=name_button_layout)
 
-        self.oxygen_Dirichlet_boundary_condition = FloatText(value=38.0,style=style, layout=widget_layout)
+        self.oxygen_Dirichlet_boundary_condition = FloatText(value=20.0,style=style, layout=widget_layout)
         self.oxygen_Dirichlet_boundary_condition_toggle = Checkbox(description='on/off', disabled=False,style=style, layout=widget_layout)
 
-        menv_var2 = Button(description='lactate (mM)', disabled=True, layout=name_button_layout)
+        menv_var2 = Button(description='chemokine (mM)', disabled=True, layout=name_button_layout)
         menv_var2.style.button_color = 'lightgreen'
 
         param_name5 = Button(description='diffusion_coefficient', disabled=True, layout=name_button_layout)
 
-        self.lactate_diffusion_coefficient = FloatText(value=30000.0,
+        self.chemokine_diffusion_coefficient = FloatText(value=30000.0,
           step=1000,style=style, layout=widget_layout)
 
         param_name6 = Button(description='decay_rate', disabled=True, layout=name_button_layout)
 
-        self.lactate_decay_rate = FloatText(value=0.0,
+        self.chemokine_decay_rate = FloatText(value=0.0,
           step=0.01,style=style, layout=widget_layout)
         param_name7 = Button(description='initial_condition', disabled=True, layout=name_button_layout)
 
-        self.lactate_initial_condition = FloatText(value=0.0,style=style, layout=widget_layout)
+        self.chemokine_initial_condition = FloatText(value=0.0,style=style, layout=widget_layout)
         param_name8 = Button(description='Dirichlet_boundary_condition', disabled=True, layout=name_button_layout)
 
-        self.lactate_Dirichlet_boundary_condition = FloatText(value=0.0,style=style, layout=widget_layout)
-        self.lactate_Dirichlet_boundary_condition_toggle = Checkbox(description='on/off', disabled=False,style=style, layout=widget_layout)
+        self.chemokine_Dirichlet_boundary_condition = FloatText(value=0.0,style=style, layout=widget_layout)
+        self.chemokine_Dirichlet_boundary_condition_toggle = Checkbox(description='on/off', disabled=False,style=style, layout=widget_layout)
         self.calculate_gradient = Checkbox(description='calculate_gradients', disabled=False, layout=desc_button_layout)
         self.track_internal = Checkbox(description='track_in_agents', disabled=False, layout=desc_button_layout)
 
@@ -88,11 +88,11 @@ class MicroenvTab(object):
         row2 = [param_name2, self.oxygen_decay_rate, menv_units_button2]
         row3 = [param_name3, self.oxygen_initial_condition, menv_units_button3]
         row4 = [param_name4, self.oxygen_Dirichlet_boundary_condition, menv_units_button4, self.oxygen_Dirichlet_boundary_condition_toggle]
-        row_lactate = [menv_var2,  ] 
-        row5 = [param_name5, self.lactate_diffusion_coefficient, menv_units_button5]
-        row6 = [param_name6, self.lactate_decay_rate, menv_units_button6]
-        row7 = [param_name7, self.lactate_initial_condition, menv_units_button7]
-        row8 = [param_name8, self.lactate_Dirichlet_boundary_condition, menv_units_button8, self.lactate_Dirichlet_boundary_condition_toggle]
+        row_chemokine = [menv_var2,  ] 
+        row5 = [param_name5, self.chemokine_diffusion_coefficient, menv_units_button5]
+        row6 = [param_name6, self.chemokine_decay_rate, menv_units_button6]
+        row7 = [param_name7, self.chemokine_initial_condition, menv_units_button7]
+        row8 = [param_name8, self.chemokine_Dirichlet_boundary_condition, menv_units_button8, self.chemokine_Dirichlet_boundary_condition_toggle]
         row9 = [self.calculate_gradient,]
         row10 = [self.track_internal,]
 
@@ -103,7 +103,7 @@ class MicroenvTab(object):
         box2 = Box(children=row2, layout=box_layout)
         box3 = Box(children=row3, layout=box_layout)
         box4 = Box(children=row4, layout=box_layout)
-        box_lactate = Box(children=row_lactate, layout=box_layout)
+        box_chemokine = Box(children=row_chemokine, layout=box_layout)
         box5 = Box(children=row5, layout=box_layout)
         box6 = Box(children=row6, layout=box_layout)
         box7 = Box(children=row7, layout=box_layout)
@@ -117,7 +117,7 @@ class MicroenvTab(object):
           box2,
           box3,
           box4,
-          box_lactate,
+          box_chemokine,
           box5,
           box6,
           box7,
@@ -145,14 +145,14 @@ class MicroenvTab(object):
         else:
           self.oxygen_Dirichlet_boundary_condition_toggle.value = False
 
-        self.lactate_diffusion_coefficient.value = float(vp[1].find('.//diffusion_coefficient').text)
-        self.lactate_decay_rate.value = float(vp[1].find('.//decay_rate').text)
-        self.lactate_initial_condition.value = float(vp[1].find('.//initial_condition').text)
-        self.lactate_Dirichlet_boundary_condition.value = float(vp[1].find('.//Dirichlet_boundary_condition').text)
+        self.chemokine_diffusion_coefficient.value = float(vp[1].find('.//diffusion_coefficient').text)
+        self.chemokine_decay_rate.value = float(vp[1].find('.//decay_rate').text)
+        self.chemokine_initial_condition.value = float(vp[1].find('.//initial_condition').text)
+        self.chemokine_Dirichlet_boundary_condition.value = float(vp[1].find('.//Dirichlet_boundary_condition').text)
         if vp[1].find('.//Dirichlet_boundary_condition').attrib['enabled'].lower() == 'true':
-          self.lactate_Dirichlet_boundary_condition_toggle.value = True
+          self.chemokine_Dirichlet_boundary_condition_toggle.value = True
         else:
-          self.lactate_Dirichlet_boundary_condition_toggle.value = False
+          self.chemokine_Dirichlet_boundary_condition_toggle.value = False
 
         if uep.find('.//options//calculate_gradients').text.lower() == 'true':
           self.calculate_gradient.value = True
@@ -180,11 +180,11 @@ class MicroenvTab(object):
         vp[0].find('.//Dirichlet_boundary_condition').text = str(self.oxygen_Dirichlet_boundary_condition.value)
         vp[0].find('.//Dirichlet_boundary_condition').attrib['enabled'] = str(self.oxygen_Dirichlet_boundary_condition_toggle.value).lower()
 
-        vp[1].find('.//diffusion_coefficient').text = str(self.lactate_diffusion_coefficient.value)
-        vp[1].find('.//decay_rate').text = str(self.lactate_decay_rate.value)
-        vp[1].find('.//initial_condition').text = str(self.lactate_initial_condition.value)
-        vp[1].find('.//Dirichlet_boundary_condition').text = str(self.lactate_Dirichlet_boundary_condition.value)
-        vp[1].find('.//Dirichlet_boundary_condition').attrib['enabled'] = str(self.lactate_Dirichlet_boundary_condition_toggle.value).lower()
+        vp[1].find('.//diffusion_coefficient').text = str(self.chemokine_diffusion_coefficient.value)
+        vp[1].find('.//decay_rate').text = str(self.chemokine_decay_rate.value)
+        vp[1].find('.//initial_condition').text = str(self.chemokine_initial_condition.value)
+        vp[1].find('.//Dirichlet_boundary_condition').text = str(self.chemokine_Dirichlet_boundary_condition.value)
+        vp[1].find('.//Dirichlet_boundary_condition').attrib['enabled'] = str(self.chemokine_Dirichlet_boundary_condition_toggle.value).lower()
 
 
         uep.find('.//options//calculate_gradients').text = str(self.calculate_gradient.value)

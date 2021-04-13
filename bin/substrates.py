@@ -5,6 +5,7 @@ from pathlib import Path
 from ipywidgets import Layout, Label, Text, Checkbox, Button, BoundedIntText, HBox, VBox, Box, \
     FloatText, Dropdown, interactive
 import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 from matplotlib.colors import BoundaryNorm
 from matplotlib.ticker import MaxNLocator
 from matplotlib.collections import LineCollection
@@ -81,7 +82,7 @@ class SubstrateTab(object):
         self.bgcolor = [1,1,1]
         self.dark_mode = True; 
         self.enable_alpha = True; 
-        self.default_alpha = 0.4
+        self.default_alpha = 1.0
 
         # initial value
         self.field_index = 4
@@ -145,7 +146,7 @@ class SubstrateTab(object):
 
         self.field_cmap = Dropdown(
             options=['viridis', 'jet', 'YlOrRd'],
-            value='YlOrRd',
+            value='viridis',
             #     description='Field',
            layout=Layout(width=constWidth)
         )
@@ -259,7 +260,7 @@ class SubstrateTab(object):
         #---------------------
         self.cell_nucleus_toggle = Checkbox(
             description='nuclei',
-            disabled=False,
+            disabled=True,
             value = self.show_nucleus,
 #           layout=Layout(width=constWidth2),
         )
@@ -292,8 +293,8 @@ class SubstrateTab(object):
 
         self.cell_alpha_toggle = Checkbox(
             description='transparency',
-            disabled=False,
-            value=self.enable_alpha, 
+            disabled=True,
+            value=False, 
         )
         def cell_alpha_toggle_cb(b):
             #print( 'yay ')
@@ -318,7 +319,7 @@ class SubstrateTab(object):
             self.i_plot.update()
             if (self.cells_toggle.value):
                 self.cell_edges_toggle.disabled = False
-                self.cell_nucleus_toggle.disabled = False
+                self.cell_nucleus_toggle.disabled = True
             else:
                 self.cell_edges_toggle.disabled = True
                 self.cell_nucleus_toggle.disabled = True
@@ -328,7 +329,7 @@ class SubstrateTab(object):
 
         self.dark_mode_toggle = Checkbox(
             description='dark mode',
-            disabled=False,
+            disabled=True,
             value=self.dark_mode, 
         )
         def dark_mode_toggle_cb(b):
@@ -730,15 +731,19 @@ class SubstrateTab(object):
         zipped = np.broadcast(x, y, s)
         patches = [Circle((x_, y_), s_)
                 for x_, y_, s_ in zipped]
-        collection = PatchCollection(patches, **kwargs)
+        collection = PatchCollection(patches, **kwargs, zorder=10)
         if c is not None:
             c = np.broadcast_to(c, zipped.shape).ravel()
             collection.set_array(c)
             collection.set_clim(vmin, vmax)
 
         ax = plt.gca()
+
         ax.add_collection(collection)
         ax.autoscale_view()
+        
+        
+
         # plt.draw_if_interactive()
         if c is not None:
             plt.sci(collection)
@@ -910,7 +915,15 @@ class SubstrateTab(object):
         plt.ylim(self.ymin, self.ymax)
 
         ax = plt.gca()
+        img = mpimg.imread('../doc/Flow_Cytometry.png')
+
+        axin = ax.inset_axes([200,-500,300,300],transform=ax.transData)    # create new inset axes in data coordinates
+        axin.imshow(img,zorder=-1)
+        axin.axis('off')
         ax.set_facecolor(bgcolor)
+
+
+
 
         #   plt.xlim(axes_min,axes_max)
         #   plt.ylim(axes_min,axes_max)
@@ -932,6 +945,10 @@ class SubstrateTab(object):
                 pass
         else:
             self.circles(xvals,yvals, s=rvals, color=rgbas  )
+
+
+
+
 
         # if (self.show_tracks):
         #     for key in self.trackd.keys():
