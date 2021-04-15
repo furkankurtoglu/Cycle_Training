@@ -2,8 +2,8 @@
 
 import os, math
 from pathlib import Path
-from ipywidgets import Layout, Label, Text, Checkbox, Button, BoundedIntText, HBox, VBox, Box, \
-    FloatText, Dropdown, interactive
+from ipywidgets import Layout, Label, Text, Checkbox, Button, BoundedIntText, HBox, VBox, Box, FloatText, Dropdown, interactive
+from matplotlib.offsetbox import TextArea, DrawingArea, OffsetImage, AnnotationBbox
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from matplotlib.colors import BoundaryNorm
@@ -915,11 +915,18 @@ class SubstrateTab(object):
         plt.ylim(self.ymin, self.ymax)
 
         ax = plt.gca()
-        img = mpimg.imread('../doc/Flow_Cytometry.png')
+        img = mpimg.imread('../doc/Flow_Cytometry_small.png')
+        
+        # Method 1 - NanoHUB (Not tested)
+        imagebox = OffsetImage(img,zoom = 58/self.fig.dpi)
+        ab = AnnotationBbox(imagebox, (360, -380),frameon=False)
+        ax.add_artist(ab)
 
-        axin = ax.inset_axes([200,-500,300,300],transform=ax.transData)    # create new inset axes in data coordinates
-        axin.imshow(img,zorder=-1)
-        axin.axis('off')
+        
+        
+        # Method 2 - NanoHUB (Failed at test)
+        # axin = ax.inset_axes([200,-500,300,300],transform=ax.transData)    # create new inset axes in data coordinates
+        # axin.imshow(img,zorder=-1)
         ax.set_facecolor(bgcolor)
 
 
