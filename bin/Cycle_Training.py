@@ -234,6 +234,8 @@ def run_done_func(s, rdir):
     # save the config file to the cache directory
     shutil.copy('config.xml', rdir)
 
+    shutil.copy('Flow_Cytometry_small.png', rdir)
+
     # cd out of tmpdir 
     os.chdir(homedir)
 
@@ -286,6 +288,8 @@ def run_sim_func(s):
         tname = tempfile.mkdtemp(suffix='.bak', prefix='tmpdir_', dir='.')
         shutil.move('tmpdir', tname)
     os.makedirs('tmpdir')
+
+    shutil.copy('doc/Flow_Cytometry_small.png', 'tmpdir')
 
     # write the default config file to tmpdir
     new_config_file = "tmpdir/config.xml"  # use Path; work on Windows?

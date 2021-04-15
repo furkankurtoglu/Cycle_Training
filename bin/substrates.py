@@ -757,6 +757,9 @@ class SubstrateTab(object):
         current_frame = frame
         fname = "snapshot%08d.svg" % frame
         full_fname = os.path.join(self.output_dir, fname)
+
+        img_fname = os.path.join(self.output_dir, 'Flow_Cytometry_small.png')
+
         # with debug_view:
             # print("plot_svg:", full_fname) 
         # print("-- plot_svg:", full_fname) 
@@ -915,7 +918,8 @@ class SubstrateTab(object):
         plt.ylim(self.ymin, self.ymax)
 
         ax = plt.gca()
-        img = mpimg.imread('../doc/Flow_Cytometry_small.png')
+
+        img = mpimg.imread(img_fname)  # Flow_Cytometry_small.png
         
         # Method 1 - NanoHUB (Not tested)
         imagebox = OffsetImage(img,zoom = 58/self.fig.dpi)
