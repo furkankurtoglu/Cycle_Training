@@ -10,12 +10,13 @@ class MicroenvTab(object):
 
     def __init__(self):
         
+        
         micron_units = Label('micron')   # use "option m" (Mac, for micro symbol)
 
         constWidth = '180px'
         tab_height = '500px'
         stepsize = 10
-
+    
         #style = {'description_width': '250px'}
         style = {'description_width': '25%'}
         layout = {'width': '400px'}
@@ -29,6 +30,9 @@ class MicroenvTab(object):
 
         menv_var1 = Button(description='oxygen (mmHg)', disabled=True, layout=name_button_layout)
         menv_var1.style.button_color = 'tan'
+        
+        menv_atten = Button(description='Attention! Diffusion is closed in this application to make simulation faster. Initial conditions can be specified still.', disabled=True,layout={'width':'75%'})
+        menv_atten.style.button_color = 'orange'
 
         param_name1 = Button(description='diffusion_coefficient', disabled=True, layout=name_button_layout)
 
@@ -40,7 +44,6 @@ class MicroenvTab(object):
         self.oxygen_decay_rate = FloatText(value=0.0,
           step=0.01,style=style, layout=widget_layout)
         param_name3 = Button(description='initial_condition', disabled=True, layout=name_button_layout)
-
         self.oxygen_initial_condition = FloatText(value=20.0,style=style, layout=widget_layout)
         param_name4 = Button(description='Dirichlet_boundary_condition', disabled=True, layout=name_button_layout)
 
@@ -82,7 +85,7 @@ class MicroenvTab(object):
 
 
 
-
+        row_atten = [ menv_atten, ]
         row_oxygen = [menv_var1,  ] 
         row1 = [param_name1, self.oxygen_diffusion_coefficient, menv_units_button1]
         row2 = [param_name2, self.oxygen_decay_rate, menv_units_button2]
@@ -96,8 +99,9 @@ class MicroenvTab(object):
         row9 = [self.calculate_gradient,]
         row10 = [self.track_internal,]
 
-
+        
         box_layout = Layout(display='flex', flex_flow='row', align_items='stretch', width='100%')
+        box_atten = Box(children=row_atten)
         box_oxygen = Box(children=row_oxygen, layout=box_layout)
         box1 = Box(children=row1, layout=box_layout)
         box2 = Box(children=row2, layout=box_layout)
@@ -110,8 +114,10 @@ class MicroenvTab(object):
         box8 = Box(children=row8, layout=box_layout)
         box9 = Box(children=row9, layout=box_layout)
         box10 = Box(children=row10, layout=box_layout)
+        
 
         self.tab = VBox([
+          box_atten,
           box_oxygen,
           box1,
           box2,
@@ -133,9 +139,8 @@ class MicroenvTab(object):
         if uep:
             for var in uep.findall('variable'):
                 vp.append(var)
-
         uep = xml_root.find('.//microenvironment_setup')  # find unique entry point
-
+        
         self.oxygen_diffusion_coefficient.value = float(vp[0].find('.//diffusion_coefficient').text)
         self.oxygen_decay_rate.value = float(vp[0].find('.//decay_rate').text)
         self.oxygen_initial_condition.value = float(vp[0].find('.//initial_condition').text)
@@ -185,7 +190,6 @@ class MicroenvTab(object):
         vp[1].find('.//initial_condition').text = str(self.chemokine_initial_condition.value)
         vp[1].find('.//Dirichlet_boundary_condition').text = str(self.chemokine_Dirichlet_boundary_condition.value)
         vp[1].find('.//Dirichlet_boundary_condition').attrib['enabled'] = str(self.chemokine_Dirichlet_boundary_condition_toggle.value).lower()
-
-
+        
         uep.find('.//options//calculate_gradients').text = str(self.calculate_gradient.value)
         uep.find('.//options//track_internalized_substrates_in_each_agent').text = str(self.track_internal.value)

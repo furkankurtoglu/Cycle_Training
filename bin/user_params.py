@@ -176,7 +176,7 @@ class UserTab(object):
 
         units_button1 = Button(description='', disabled=True, layout=units_button_layout) 
         units_button1.style.button_color = 'lightgreen'
-        units_button2 = Button(description='micrometer', disabled=True, layout=units_button_layout) 
+        units_button2 = Button(description='', disabled=True, layout=units_button_layout) 
         units_button2.style.button_color = 'tan'
         units_button3 = Button(description='', disabled=True, layout=units_button_layout) 
         units_button3.style.button_color = 'tan'
