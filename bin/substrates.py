@@ -758,6 +758,7 @@ class SubstrateTab(object):
         fname = "snapshot%08d.svg" % frame
         full_fname = os.path.join(self.output_dir, fname)
 
+        # img_fname = os.path.join(self.output_dir, 'Flow_Cytometry_small.png')
         img_fname = os.path.join(self.output_dir, 'Flow_Cytometry_small.png')
 
         # with debug_view:
@@ -922,7 +923,8 @@ class SubstrateTab(object):
         img = mpimg.imread(img_fname)  # Flow_Cytometry_small.png
         
         # Method 1 - NanoHUB (Not tested)
-        imagebox = OffsetImage(img,zoom = 58/self.fig.dpi)
+        # imagebox = OffsetImage(img,zoom = 58/self.fig.dpi)
+        imagebox = OffsetImage(img)
         ab = AnnotationBbox(imagebox, (360, -380),frameon=False)
         ax.add_artist(ab)
 
