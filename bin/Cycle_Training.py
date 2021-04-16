@@ -291,7 +291,7 @@ def run_sim_func(s):
     os.makedirs('tmpdir')
 
     # shutil.copy('doc/Flow_Cytometry_small.png', 'tmpdir')
-    shutil.copy('doc/fc_small.png', 'tmpdir')
+    shutil.copy('doc/Flow_Cytometry_small.png', 'tmpdir')
 
     # write the default config file to tmpdir
     new_config_file = "tmpdir/config.xml"  # use Path; work on Windows?
