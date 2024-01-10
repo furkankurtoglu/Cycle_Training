@@ -985,6 +985,8 @@ class SubstrateTab(object):
         # print("plot_substrate(): frame*self.svg_delta_t  = ",frame*self.svg_delta_t)
         self.title_str = ''
 
+                            
+
         # Recall:
         # self.svg_delta_t = config_tab.svg_interval.value
         # self.substrate_delta_t = config_tab.mcds_interval.value
@@ -1112,6 +1114,7 @@ class SubstrateTab(object):
             num_contours = 15
             levels = MaxNLocator(nbins=num_contours).tick_values(self.cmap_min.value, self.cmap_max.value)
             contour_ok = True
+
             if (self.cmap_fixed_toggle.value):
                 try:
                     #substrate_plot = main_ax.contourf(xgrid, ygrid, M[self.field_index, :].reshape(self.numy, self.numx), levels=levels, extend='both', cmap=self.field_cmap.value, fontsize=self.fontsize)
@@ -1135,6 +1138,12 @@ class SubstrateTab(object):
                 # cbar = self.fig.colorbar(substrate_plot, ax=main_ax)
                 cbar = self.fig.colorbar(substrate_plot)
                 cbar.ax.tick_params(labelsize=self.fontsize)
+                # Colorbar labeling 
+                # cbar.set_label(self.field_index,size=self.fontsize)
+                if (self.field_index == 4): #Oxygen
+                    cbar.set_label('mmHg',size=self.fontsize)
+                if (self.field_index == 5): #Chemokine
+                    cbar.set_label('mM',size=self.fontsize)
                 # cbar = main_ax.colorbar(my_plot)
                 # cbar.ax.tick_params(labelsize=self.fontsize)
             # axes_min = 0
@@ -1142,9 +1151,10 @@ class SubstrateTab(object):
 
             # main_ax.set_xlim([self.xmin, self.xmax])
             # main_ax.set_ylim([self.ymin, self.ymax])
+
+
             plt.xlim(self.xmin, self.xmax)
             plt.ylim(self.ymin, self.ymax)
-
             # if (frame == 0):  # maybe allow substrate grid display later
             #     xs = np.linspace(self.xmin,self.xmax,self.numx)
             #     ys = np.linspace(self.ymin,self.ymax,self.numy)
@@ -1163,10 +1173,16 @@ class SubstrateTab(object):
             if (not self.substrates_toggle.value):
                 # self.fig = plt.figure(figsize=(12, 12))
                 self.fig = plt.figure(figsize=(self.figsize_width_svg, self.figsize_height_svg))
-            # self.plot_svg(frame)
+            # self.`(frame)
             self.svg_frame = frame
             # print('plot_svg with frame=',self.svg_frame)
             self.plot_svg(self.svg_frame)
+            x1 = -400
+            x2 = -200
+            y1 = -450
+            y2 = -450
+            plt.plot([x1,x2],[y1,y2], 'k', linewidth = 5)
+            plt.text(-325, -440, u"200 \u03bcm")
 
         # plt.subplot(grid[2, 0])
         # oxy_ax = self.fig.add_subplot(grid[2:, 0:1])
