@@ -1177,12 +1177,15 @@ class SubstrateTab(object):
             self.svg_frame = frame
             # print('plot_svg with frame=',self.svg_frame)
             self.plot_svg(self.svg_frame)
-            x1 = -400
-            x2 = -200
-            y1 = -450
-            y2 = -450
-            plt.plot([x1,x2],[y1,y2], 'k', linewidth = 5)
-            plt.text(-325, -440, u"200 \u03bcm")
+            fname = "output%08d_microenvironment0.mat" % self.substrate_frame
+            full_fname = os.path.join(self.output_dir, fname)
+            if os.path.isfile(full_fname):            
+                x1 = -400
+                x2 = -200
+                y1 = -450
+                y2 = -450
+                plt.plot([x1,x2],[y1,y2], 'k', linewidth = 5)
+                plt.text(-325, -440, u"200 \u03bcm")
 
         # plt.subplot(grid[2, 0])
         # oxy_ax = self.fig.add_subplot(grid[2:, 0:1])
