@@ -758,8 +758,8 @@ class SubstrateTab(object):
         fname = "snapshot%08d.svg" % frame
         full_fname = os.path.join(self.output_dir, fname)
 
-        # img_fname = os.path.join(self.output_dir, 'Flow_Cytometry_small.png')
-        img_fname = os.path.join(self.output_dir, '../doc/Flow_Cytometry_small.png')
+        img_fname = os.path.join(self.output_dir, 'Flow_Cytometry_small.png')
+        #img_fname = os.path.join(self.output_dir, '../doc/Flow_Cytometry_small.png')
 
         # with debug_view:
             # print("plot_svg:", full_fname) 
